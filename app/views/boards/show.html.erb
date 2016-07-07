@@ -1,0 +1,12 @@
+<%  case @game.status %>
+<%  when "challenge accepted" %>
+  <!-- < %= render 'pick_markers' %> -->
+<%  when "game in progress" %>
+  <%= render 'display_board' %>
+<%  when "game won" %>
+  <%= render 'display_board' %>
+<% when "game tied" %>
+  <%= render 'display_board' %>
+<%  else %>
+ <!-- raise error? -->
+<%  end %>

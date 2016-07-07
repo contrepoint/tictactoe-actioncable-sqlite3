@@ -1,0 +1,17 @@
+// Place all the styles related to the boards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.board{
+  margin: auto;
+  width: 26%;
+}
+.cell {
+    float:left;
+    width: 30%;
+    text-align: center;
+    padding-top: 13%;
+    padding-bottom: 13%; /* = width for a 1:1 aspect ratio */
+    margin:0.4%;
+    background-color: #d3d3d3;
+}
