@@ -1,12 +1,14 @@
 App.board = App.cable.subscriptions.create "BoardChannel",
   connected: ->
-    # Called when the subscription is ready for use on the server
+    # alert("whee you are connected!")# Called when the subscription is ready for use on the server
 
   disconnected: ->
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    # Called when there's incoming data on the websocket for this channel
+    debugger
+    console.log(data)
+    alert("whee")
 
-  mark_a_cell: ->
-    @perform 'mark_a_cell'
+  # mark_a_cell: ->
+  #   @perform 'mark_a_cell'

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+
   root 'static_pages#home'
 
   resources :games, only: [:new, :create, :show, :update]

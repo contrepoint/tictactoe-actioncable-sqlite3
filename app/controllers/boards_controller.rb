@@ -13,20 +13,25 @@ class BoardsController < ApplicationController
 
     if @game.board.empty_cell?(position)
       @game.board.mark_the_spot(position, @marker)
-      @game.switch_turns
+      # @game.switch_turns
       flash[:notice] = "You successfully placed your marker at position #{position}!"
     else
       flash[:notice] = "Position #{position} is already taken!"
     end
 
-    if @game.ended?
-      flash[:alert] = "Game is over!"
-    else
-      flash[:alert] = "Game's not over!"
-    end
+    updated_board = @game.board.state.split('')
+    BroadcastBoardJob.perform_later(updated_board)
+
+    # if @game.ended?
+    #   flash[:alert] = "Game is over!"
+    # else
+    #   flash[:alert] = "Game's not over!"
+    # end
     redirect_to board_path(params[:id])
   end
 
+  def derp
+  end
   private
     def is_game_ongoing?
       game = Game.find(params[:id])
