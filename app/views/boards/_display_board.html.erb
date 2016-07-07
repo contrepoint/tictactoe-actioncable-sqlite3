@@ -10,7 +10,7 @@
   <% @board.each_with_index do |cell, index| %>
     <div class="cell">
       <% if cell == "-" %>
-        <%= link_to cell, board_path(params[:id], position: index), method: :patch %>
+        <%= link_to cell, board_path(params[:id], position: index), method: :patch, 'data-behavior' => 'update-board' %>
       <% else %>
         <%= cell %>
       <% end %>
