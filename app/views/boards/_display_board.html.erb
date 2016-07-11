@@ -6,7 +6,6 @@
   <%= "It is #{game.active_player.email}'s turn." %>
 <% end %>
 
-
 <div class="board">
   <% board_state = board.state.split('') %>
   <% board_state.each_with_index do |cell, index| %>

@@ -30,13 +30,13 @@ class Board < ApplicationRecord
     if check_lines == 'x'
       self.game.winning_marker = 'x'
       self.game.status = 'game won'
-      self.active_player = nil
+      self.game.active_player = nil
       self.save
       return true
     elsif check_lines == 'o'
       self.game.winning_marker = 'o'
       self.game.status = 'game won'
-      self.active_player = nil
+      self.game.active_player = nil
       self.save
       return true
     else
