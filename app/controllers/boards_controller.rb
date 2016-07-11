@@ -20,7 +20,7 @@ class BoardsController < ApplicationController
     end
 
     updated_board = @game.board.state.split('')
-    # BroadcastBoardJob.perform_later(updated_board)
+    BoardBroadcastJob.perform_later(updated_board)
 
     # if @game.ended?
     #   flash[:alert] = "Game is over!"
