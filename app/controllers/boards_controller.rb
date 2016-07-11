@@ -3,24 +3,34 @@ class BoardsController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @board = @game.board.state.split('')
+    @board = @game.board
   end
 
   def update
     @game = Game.find(params[:id])
+    @board = @game.board
+    # ActionCable.server.broadcast
     position = params[:position].to_i
-    find_marker
-
-    if @game.board.empty_cell?(position)
-      @game.board.mark_the_spot(position, @marker)
-      # @game.switch_turns
-      flash[:notice] = "You successfully placed your marker at position #{position}!"
-    else
-      flash[:notice] = "Position #{position} is already taken!"
-    end
-
-    updated_board = @game.board.state.split('')
-    BoardBroadcastJob.perform_later(updated_board)
+    @board.state[position] = "x"
+    @board.save
+    # @board_state = @board.state.split('')
+    MarkBoardJob.perform_now(@board)
+    # byebug
+    redirect_to @board
+    # @game = Game.find(params[:id])
+    # position = params[:position].to_i
+    # find_marker
+    #
+    # if @game.board.empty_cell?(position)
+    #   @game.board.mark_the_spot(position, @marker)
+    #   # @game.switch_turns
+    #   flash[:notice] = "You successfully placed your marker at position #{position}!"
+    # else
+    #   flash[:notice] = "Position #{position} is already taken!"
+    # end
+    #
+    # updated_board = @game.board.state.split('')
+    # BoardBroadcastJob.perform_later(updated_board)
 
     # if @game.ended?
     #   flash[:alert] = "Game is over!"
@@ -30,8 +40,6 @@ class BoardsController < ApplicationController
     redirect_to board_path(params[:id])
   end
 
-  def derp
-  end
   private
     def is_game_ongoing?
       game = Game.find(params[:id])
