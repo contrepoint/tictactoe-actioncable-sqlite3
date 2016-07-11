@@ -6,6 +6,6 @@ class MarkBoardJob < ApplicationJob
   end
 
   def draw(board, id)
-    ApplicationController.render(partial: 'boards/display_board', locals: { board: board, params: id })
+    ApplicationController.render(partial: 'boards/display_board', locals: { board: board, params: id, game: board.game })
   end
 end

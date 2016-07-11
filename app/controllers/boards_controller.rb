@@ -9,35 +9,29 @@ class BoardsController < ApplicationController
   def update
     @game = Game.find(params[:id])
     @board = @game.board
-    # ActionCable.server.broadcast
     position = params[:position].to_i
+    find_marker
+
+    if @game.board.empty_cell?(position)
+      @game.board.mark_the_spot(position, @marker)
+      # @game.switch_turns
+      flash[:notice] = "You successfully placed your marker at position #{position}!"
+    else
+      flash[:notice] = "Position #{position} is already taken!"
+    end
     @board.state[position] = "x"
     @board.save
-    # @board_state = @board.state.split('')
+    # byebug
     MarkBoardJob.perform_now(@board)
     # byebug
     redirect_to @board
-    # @game = Game.find(params[:id])
-    # position = params[:position].to_i
-    # find_marker
-    #
-    # if @game.board.empty_cell?(position)
-    #   @game.board.mark_the_spot(position, @marker)
-    #   # @game.switch_turns
-    #   flash[:notice] = "You successfully placed your marker at position #{position}!"
-    # else
-    #   flash[:notice] = "Position #{position} is already taken!"
-    # end
-    #
-    # updated_board = @game.board.state.split('')
-    # BoardBroadcastJob.perform_later(updated_board)
 
     # if @game.ended?
     #   flash[:alert] = "Game is over!"
     # else
     #   flash[:alert] = "Game's not over!"
     # end
-    redirect_to board_path(params[:id])
+    # redirect_to board_path(params[:id])
   end
 
   private

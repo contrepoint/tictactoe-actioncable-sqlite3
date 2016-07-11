@@ -1,10 +1,11 @@
-<% if @game.status == "game won" %>
-  <%= "The game is over. #{@game.winner.email} won this match" %>
-<% elsif @game.status == "game tied" %>
+<% if game.status == "game won" %>
+  <%= "The game is over. #{game.winner.email} won this match" %>
+<% elsif game.status == "game tied" %>
   No one won this match.
-<% elsif @game.status == 'game in progress' %>
-  <%= "It is #{@game.active_player.email}'s turn." %>
+<% elsif game.status == 'game in progress' %>
+  <%= "It is #{game.active_player.email}'s turn." %>
 <% end %>
+
 
 <div class="board">
   <% board_state = board.state.split('') %>
