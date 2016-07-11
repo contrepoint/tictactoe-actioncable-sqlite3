@@ -1,13 +1,15 @@
 class Board < ApplicationRecord
   belongs_to :game, optional: true
   after_create :set_game_id, on: :create
-  # after_update_commit :broadcast_self
+  # after_create_commit { MessageBroadcastJob.perform_later self }
+  after_update_commit :broadcast_self
 
-  # def broadcast_self
-  #   @updated_board = self.status.split('')
-  #   MessageBroadcastJob.perform_later(@updated_board)
-  #   # can refactor the split out later
-  # end
+  def broadcast_self
+    @updated_board = self.state.split('')
+    BoardBroadcastJob.perform_later(@updated_board)
+    # can refactor the split out later
+    byebug
+  end
 
 # Mark a spot
 	def empty_cell?(position)

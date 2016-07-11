@@ -10,13 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706091639) do
+ActiveRecord::Schema.define(version: 20160707071509) do
 
   create_table "boards", force: :cascade do |t|
     t.integer  "game_id"
     t.string   "state",      default: "---------"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string   "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "games", force: :cascade do |t|
@@ -36,6 +42,12 @@ ActiveRecord::Schema.define(version: 20160706091639) do
     t.index ["challenged_id"], name: "index_games_on_challenged_id"
     t.index ["challenger_id"], name: "index_games_on_challenger_id"
     t.index ["winner_id"], name: "index_games_on_winner_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
